@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Usuarios.Application\Usuarios.Application.csproj" />
+    <ProjectReference Include="..\Usuarios.Domain\Usuarios.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Configurations\" />
+    <Folder Include="Persistences\Repositories\MongoDB\" />
+    <Folder Include="Queries\" />
+  </ItemGroup>
+
+</Project>
