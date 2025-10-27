@@ -1,12 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\anale\\OneDrive\\Documentos\\UCAB\\DESA 2\\Proyecto\\VivoPass\\UsuarioMS\\Usuarios.API\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{842D8CDF-5BDF-4519-B41C-48FF3022EF7A}|Usuarios.API.csproj|c:\\users\\anale\\onedrive\\documentos\\ucab\\desa 2\\proyecto\\vivopass\\usuarioms\\usuarios.api\\.env||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{842D8CDF-5BDF-4519-B41C-48FF3022EF7A}|Usuarios.API.csproj|solutionrelative:.env||{8B382828-6202-11D1-8870-0000F87579D2}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -14,7 +9,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -27,19 +22,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": ".env",
-              "DocumentMoniker": "C:\\Users\\anale\\OneDrive\\Documentos\\UCAB\\DESA 2\\Proyecto\\VivoPass\\UsuarioMS\\Usuarios.API\\.env",
-              "RelativeDocumentMoniker": ".env",
-              "ToolTip": "C:\\Users\\anale\\OneDrive\\Documentos\\UCAB\\DESA 2\\Proyecto\\VivoPass\\UsuarioMS\\Usuarios.API\\.env",
-              "RelativeToolTip": ".env",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-09-30T21:02:45.463Z",
-              "EditorCaption": ""
             }
           ]
         }

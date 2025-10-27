@@ -1,0 +1,155 @@
+[
+  {
+    "ContainingType": "Usuarios.API.Controllers.UsuariosController",
+    "Method": "GetHistActByUsuarioId",
+    "RelativePath": "Usuarios/activity",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Usuarios.API.Controllers.UsuariosController",
+    "Method": "CrearUsuario",
+    "RelativePath": "Usuarios/crearUsuario",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuarioDto",
+        "Type": "Usuarios.Application.DTOs.CrearUsuarioDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Usuarios.API.Controllers.UsuariosController",
+    "Method": "GetRolById",
+    "RelativePath": "Usuarios/getRolById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Usuarios.API.Controllers.UsuariosController",
+    "Method": "GetRolByNombre",
+    "RelativePath": "Usuarios/getRolByNombre",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nombre",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Usuarios.API.Controllers.UsuariosController",
+    "Method": "GetTodosRoles",
+    "RelativePath": "Usuarios/getTodosRoles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Usuarios.API.Controllers.UsuariosController",
+    "Method": "GetTodosUsuarios",
+    "RelativePath": "Usuarios/getTodosUsuarios",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Usuarios.API.Controllers.UsuariosController",
+    "Method": "GetUsuarioByCorreo",
+    "RelativePath": "Usuarios/getUsuarioByCorreo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "correo",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Usuarios.API.Controllers.UsuariosController",
+    "Method": "GetUsuarioById",
+    "RelativePath": "Usuarios/getUsuarioById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Usuarios.API.Controllers.UsuariosController",
+    "Method": "ModificarUsuarioById",
+    "RelativePath": "Usuarios/modificarUsuario",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "usuarioDto",
+        "Type": "Usuarios.Application.DTOs.ModificarUsuarioDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Usuarios.API.Controllers.UsuariosController",
+    "Method": "AgregarAct",
+    "RelativePath": "Usuarios/publishActivity",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createUserActivityDto",
+        "Type": "Usuarios.Application.DTOs.CrearActUsuarioDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
