@@ -13,7 +13,7 @@ namespace Usuarios.Application.Commands
         public ModificarUsuarioDTO UsuarioDto { get; }
         public string id { get; }
 
-        public ModificarUsuarioCommand(ModificarUsuarioDTO usuarioDto, string id)
+        public ModificarUsuarioCommand(string id, ModificarUsuarioDTO usuarioDto)
         {
             UsuarioDto = usuarioDto;
             this.id = id;
