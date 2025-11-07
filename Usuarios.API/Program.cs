@@ -1,7 +1,12 @@
 using DotNetEnv;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using log4net;
+using log4net.Config;
 using MassTransit;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
+using Usuarios.API.Controllers;
 using Usuarios.Application.Commands.CommandHandlers;
 using Usuarios.Application.Events;
 using Usuarios.Application.Events.EventHandlers;
@@ -13,15 +18,34 @@ using Usuarios.Infrastructure.Consumers;
 using Usuarios.Infrastructure.Interfaces;
 using Usuarios.Infrastructure.Persistences.Repositories.MongoDB;
 using Usuarios.Infrastructure.Queries.QueryHandlers;
+using Usuarios.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configurar log4net
+XmlConfigurator.Configure(new FileInfo("log4net.config"));
+builder.Services.AddSingleton<ILog>(provider => LogManager.GetLogger(typeof(UsuariosController)));
 
 Env.Load();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Usuarios API",
+        Version = "v1",
+        Description = "API del Microservicio de Usuarios que gestiona la información de usuarios, roles y actividades.",
+    });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+    options.IncludeXmlComments(xmlPath);
+});
 
 // Registrar configuración de MongoDB
 builder.Services.AddSingleton<MongoDBConfig>();
@@ -32,6 +56,7 @@ builder.Services.AddScoped<IRolRepository, RolRepository>();
 builder.Services.AddScoped<IUsuarioHistorialActividad, UsuarioHistorialActividadRepository>();
 builder.Services.AddScoped<IUsuarioFactory, UsuarioFactory>();
 builder.Services.AddScoped<IRolFactory, RolFactory>();
+builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
 
 // REGISTRA MediatR PARA TODOS LOS HANDLERS
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CrearUsuarioCommandHandler).Assembly));

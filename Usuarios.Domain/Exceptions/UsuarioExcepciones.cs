@@ -93,6 +93,18 @@ namespace Usuarios.Domain.Exceptions
     {
         public NombreRolException() : base("El nombre del rol no puede estar vacío.") { }
     }
+    public class TelefonoUsuarioException : Exception
+    {
+        public TelefonoUsuarioException() : base("El telefono no puede estar vacío.") { }
+    }
+    public class DireccionUsuarioException : Exception
+    {
+        public DireccionUsuarioException() : base("La direccion no puede estar vacía.") { }
+    }
+    public class FotoPerfilUsuarioException : Exception
+    {
+        public FotoPerfilUsuarioException() : base("La foto de perfil no puede estar vacía.") { }
+    }
     #endregion
 
     #region FACTORIES EXCEPTIONS
@@ -231,6 +243,14 @@ namespace Usuarios.Domain.Exceptions
     }
     #endregion
 
+    #region SERVICES EXCEPTIONS
+    //Cloudinary Service Exception
+    public class SubirImagenCloudinaryException : Exception
+    {
+        public SubirImagenCloudinaryException(Exception inner) : base("Error al subir la imagen a Cloudinary.", inner) { }
+    }
+    #endregion
+
     /*/////////////////OTROS/////////////////*/
     #region MEDIATR EXCEPTIONS
     //Mediatr Null Exception
@@ -260,9 +280,27 @@ namespace Usuarios.Domain.Exceptions
     }
     #endregion
 
+    #region CLOUDINARY EXCEPTIONS
+    public class CloudinaryServiceNullException : Exception
+    {
+        public CloudinaryServiceNullException() : base("No se pudo acceder al proveedor de imágenes Cloudinary. " +
+                                                "El servicio no está inicializado o no fue configurado correctamente.")
+        { }
+    }
+    #endregion
+
+    #region LOGGER EXCEPTIONS
+    public class LoggerNullException : Exception
+    {
+        public LoggerNullException() : base("El servicio de logging (ILogger o similar) es obligatorio y no puede ser nulo. " + 
+                                            "Asegúrese de que ILogger esté correctamente inyectado en el constructor del componente.")
+        { }
+    }
+    #endregion
+
     #region VALIDATION EXCEPTIONS
-    //Rol Exceptions
-    public class IDRolNotFoundException : Exception
+        //Rol Exceptions
+        public class IDRolNotFoundException : Exception
     {
         public IDRolNotFoundException() : base("El ID del rol especificado no existe.")
         { }

@@ -1,30 +1,83 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.0.4",
   "info": {
-    "title": "Usuarios.API",
-    "version": "1.0"
+    "title": "Usuarios API",
+    "description": "API del Microservicio de Usuarios que gestiona la información de usuarios, roles y actividades.",
+    "version": "v1"
   },
   "paths": {
-    "/Usuarios/crearUsuario": {
+    "/api/Usuarios/crearUsuario": {
       "post": {
         "tags": [
           "Usuarios"
         ],
+        "summary": "Crea un nuevo usuario.",
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/CrearUsuarioDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CrearUsuarioDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CrearUsuarioDTO"
+                "type": "object",
+                "properties": {
+                  "Nombre": {
+                    "type": "string"
+                  },
+                  "Apellido": {
+                    "type": "string"
+                  },
+                  "FechaNacimiento": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "Correo": {
+                    "type": "string"
+                  },
+                  "Telefono": {
+                    "type": "string"
+                  },
+                  "Direccion": {
+                    "type": "string"
+                  },
+                  "FotoPerfil": {
+                    "type": "string"
+                  },
+                  "Rol": {
+                    "type": "string"
+                  },
+                  "imagen": {
+                    "type": "string",
+                    "description": "Archivo de imagen de perfil enviado en el formulario.",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "Nombre": {
+                  "style": "form"
+                },
+                "Apellido": {
+                  "style": "form"
+                },
+                "FechaNacimiento": {
+                  "style": "form"
+                },
+                "Correo": {
+                  "style": "form"
+                },
+                "Telefono": {
+                  "style": "form"
+                },
+                "Direccion": {
+                  "style": "form"
+                },
+                "FotoPerfil": {
+                  "style": "form"
+                },
+                "Rol": {
+                  "style": "form"
+                },
+                "imagen": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -36,15 +89,17 @@
         }
       }
     },
-    "/Usuarios/modificarUsuario": {
+    "/api/Usuarios/modificarUsuario": {
       "patch": {
         "tags": [
           "Usuarios"
         ],
+        "summary": "Modifica un usuario existente.",
         "parameters": [
           {
             "name": "id",
             "in": "query",
+            "description": "ID del usuario a modificar (FromQuery).",
             "schema": {
               "type": "string"
             }
@@ -52,19 +107,51 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/ModificarUsuarioDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ModificarUsuarioDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ModificarUsuarioDTO"
+                "type": "object",
+                "properties": {
+                  "Nombre": {
+                    "type": "string"
+                  },
+                  "Apellido": {
+                    "type": "string"
+                  },
+                  "Telefono": {
+                    "type": "string"
+                  },
+                  "Direccion": {
+                    "type": "string"
+                  },
+                  "FotoPerfil": {
+                    "type": "string"
+                  },
+                  "nuevaImagen": {
+                    "type": "string",
+                    "description": "Nueva imagen de perfil opcional.",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "Nombre": {
+                  "style": "form"
+                },
+                "Apellido": {
+                  "style": "form"
+                },
+                "Telefono": {
+                  "style": "form"
+                },
+                "Direccion": {
+                  "style": "form"
+                },
+                "FotoPerfil": {
+                  "style": "form"
+                },
+                "nuevaImagen": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -76,15 +163,17 @@
         }
       }
     },
-    "/Usuarios/getUsuarioByCorreo": {
+    "/api/Usuarios/getUsuarioByCorreo": {
       "get": {
         "tags": [
           "Usuarios"
         ],
+        "summary": "Obtiene los detalles de un usuario a partir de su correo electrónico.",
         "parameters": [
           {
             "name": "correo",
             "in": "query",
+            "description": "Correo electrónico del usuario.",
             "schema": {
               "type": "string"
             }
@@ -97,15 +186,17 @@
         }
       }
     },
-    "/Usuarios/getUsuarioById": {
+    "/api/Usuarios/getUsuarioById": {
       "get": {
         "tags": [
           "Usuarios"
         ],
+        "summary": "Obtiene los detalles de un usuario a partir de su ID.",
         "parameters": [
           {
             "name": "id",
             "in": "query",
+            "description": "ID del usuario.",
             "schema": {
               "type": "string"
             }
@@ -118,11 +209,12 @@
         }
       }
     },
-    "/Usuarios/getTodosUsuarios": {
+    "/api/Usuarios/getTodosUsuarios": {
       "get": {
         "tags": [
           "Usuarios"
         ],
+        "summary": "Obtiene la lista completa de todos los usuarios registrados.",
         "responses": {
           "200": {
             "description": "OK"
@@ -130,15 +222,17 @@
         }
       }
     },
-    "/Usuarios/getRolByNombre": {
+    "/api/Usuarios/getRolByNombre": {
       "get": {
         "tags": [
           "Usuarios"
         ],
+        "summary": "Obtiene los detalles de un rol a partir de su nombre.",
         "parameters": [
           {
             "name": "nombre",
             "in": "query",
+            "description": "Nombre del rol.",
             "schema": {
               "type": "string"
             }
@@ -151,15 +245,17 @@
         }
       }
     },
-    "/Usuarios/getRolById": {
+    "/api/Usuarios/getRolById": {
       "get": {
         "tags": [
           "Usuarios"
         ],
+        "summary": "Obtiene los detalles de un rol a partir de su ID.",
         "parameters": [
           {
             "name": "id",
             "in": "query",
+            "description": "ID del rol.",
             "schema": {
               "type": "string"
             }
@@ -172,11 +268,12 @@
         }
       }
     },
-    "/Usuarios/getTodosRoles": {
+    "/api/Usuarios/getTodosRoles": {
       "get": {
         "tags": [
           "Usuarios"
         ],
+        "summary": "Obtiene la lista completa de todos los roles disponibles.",
         "responses": {
           "200": {
             "description": "OK"
@@ -184,15 +281,17 @@
         }
       }
     },
-    "/Usuarios/activity": {
+    "/api/Usuarios/activity": {
       "get": {
         "tags": [
           "Usuarios"
         ],
+        "summary": "Obtiene el historial de actividad de un usuario específico.",
         "parameters": [
           {
             "name": "id",
             "in": "query",
+            "description": "ID del usuario.",
             "schema": {
               "type": "string"
             }
@@ -205,12 +304,14 @@
         }
       }
     },
-    "/Usuarios/publishActivity": {
+    "/api/Usuarios/publishActivity": {
       "post": {
         "tags": [
           "Usuarios"
         ],
+        "summary": "Publica un evento de actividad del usuario en el bus de mensajes.",
         "requestBody": {
+          "description": "Detalles de la actividad a registrar.",
           "content": {
             "application/json": {
               "schema": {
@@ -251,46 +352,6 @@
             "nullable": true
           },
           "accion": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CrearUsuarioDTO": {
-        "type": "object",
-        "properties": {
-          "nombre": {
-            "type": "string",
-            "nullable": true
-          },
-          "apellido": {
-            "type": "string",
-            "nullable": true
-          },
-          "fechaNacimiento": {
-            "type": "string",
-            "format": "date"
-          },
-          "correo": {
-            "type": "string",
-            "nullable": true
-          },
-          "rol": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ModificarUsuarioDTO": {
-        "type": "object",
-        "properties": {
-          "nombre": {
-            "type": "string",
-            "nullable": true
-          },
-          "apellido": {
             "type": "string",
             "nullable": true
           }
