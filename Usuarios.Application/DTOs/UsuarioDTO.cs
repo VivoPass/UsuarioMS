@@ -8,6 +8,9 @@ namespace Usuarios.Application.DTOs
         public string Apellido { get; init; }
         public DateOnly FechaNacimiento { get; init; }
         public string Correo { get; init; }
+        public string Telefono { get; init; }
+        public string Direccion { get; init; }
+        public string FotoPerfil { get; init; }
         public string Rol { get; set; }
 
     }

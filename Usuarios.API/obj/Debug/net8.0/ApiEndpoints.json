@@ -2,7 +2,7 @@
   {
     "ContainingType": "Usuarios.API.Controllers.UsuariosController",
     "Method": "GetHistActByUsuarioId",
-    "RelativePath": "Usuarios/activity",
+    "RelativePath": "api/Usuarios/activity",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -18,15 +18,55 @@
   {
     "ContainingType": "Usuarios.API.Controllers.UsuariosController",
     "Method": "CrearUsuario",
-    "RelativePath": "Usuarios/crearUsuario",
+    "RelativePath": "api/Usuarios/crearUsuario",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "usuarioDto",
-        "Type": "Usuarios.Application.DTOs.CrearUsuarioDTO",
-        "IsRequired": true
+        "Name": "Nombre",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Apellido",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "FechaNacimiento",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      },
+      {
+        "Name": "Correo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Telefono",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Direccion",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "FotoPerfil",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Rol",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "imagen",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -34,7 +74,7 @@
   {
     "ContainingType": "Usuarios.API.Controllers.UsuariosController",
     "Method": "GetRolById",
-    "RelativePath": "Usuarios/getRolById",
+    "RelativePath": "api/Usuarios/getRolById",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -50,7 +90,7 @@
   {
     "ContainingType": "Usuarios.API.Controllers.UsuariosController",
     "Method": "GetRolByNombre",
-    "RelativePath": "Usuarios/getRolByNombre",
+    "RelativePath": "api/Usuarios/getRolByNombre",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -66,7 +106,7 @@
   {
     "ContainingType": "Usuarios.API.Controllers.UsuariosController",
     "Method": "GetTodosRoles",
-    "RelativePath": "Usuarios/getTodosRoles",
+    "RelativePath": "api/Usuarios/getTodosRoles",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -76,7 +116,7 @@
   {
     "ContainingType": "Usuarios.API.Controllers.UsuariosController",
     "Method": "GetTodosUsuarios",
-    "RelativePath": "Usuarios/getTodosUsuarios",
+    "RelativePath": "api/Usuarios/getTodosUsuarios",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -86,7 +126,7 @@
   {
     "ContainingType": "Usuarios.API.Controllers.UsuariosController",
     "Method": "GetUsuarioByCorreo",
-    "RelativePath": "Usuarios/getUsuarioByCorreo",
+    "RelativePath": "api/Usuarios/getUsuarioByCorreo",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -102,7 +142,7 @@
   {
     "ContainingType": "Usuarios.API.Controllers.UsuariosController",
     "Method": "GetUsuarioById",
-    "RelativePath": "Usuarios/getUsuarioById",
+    "RelativePath": "api/Usuarios/getUsuarioById",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -118,7 +158,7 @@
   {
     "ContainingType": "Usuarios.API.Controllers.UsuariosController",
     "Method": "ModificarUsuarioById",
-    "RelativePath": "Usuarios/modificarUsuario",
+    "RelativePath": "api/Usuarios/modificarUsuario",
     "HttpMethod": "PATCH",
     "IsController": true,
     "Order": 0,
@@ -129,9 +169,34 @@
         "IsRequired": false
       },
       {
-        "Name": "usuarioDto",
-        "Type": "Usuarios.Application.DTOs.ModificarUsuarioDTO",
-        "IsRequired": true
+        "Name": "Nombre",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Apellido",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Telefono",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Direccion",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "FotoPerfil",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "nuevaImagen",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -139,7 +204,7 @@
   {
     "ContainingType": "Usuarios.API.Controllers.UsuariosController",
     "Method": "AgregarAct",
-    "RelativePath": "Usuarios/publishActivity",
+    "RelativePath": "api/Usuarios/publishActivity",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,

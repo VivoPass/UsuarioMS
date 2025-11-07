@@ -3,10 +3,13 @@ namespace Usuarios.Application.DTOs
 {
     public class CrearUsuarioDTO
     {
-        public string Nombre { get; init; }
-        public string Apellido { get; init; }
-        public DateOnly FechaNacimiento { get; init; }
-        public string Correo { get; init; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public DateOnly FechaNacimiento { get; set; }
+        public string Correo { get; set; }
+        public string Telefono { get; set; }
+        public string Direccion { get; set; }
+        public string FotoPerfil { get; set; }
         public string Rol { get; set; }
     }
 }
