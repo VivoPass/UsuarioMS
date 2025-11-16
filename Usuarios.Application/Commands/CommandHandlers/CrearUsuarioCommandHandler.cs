@@ -43,6 +43,7 @@ namespace Usuarios.Application.Commands.CommandHandlers
 
                 Logger.Debug("Invocando IUsuarioFactory para crear la nueva entidad de Usuario.");
                 var usuario = UsuarioFactory.Crear(
+                    request.UsuarioDto.Id,
                     request.UsuarioDto.Nombre,
                     request.UsuarioDto.Apellido,
                     request.UsuarioDto.FechaNacimiento,

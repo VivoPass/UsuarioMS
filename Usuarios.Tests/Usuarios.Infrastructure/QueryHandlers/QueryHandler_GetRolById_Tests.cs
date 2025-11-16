@@ -19,6 +19,7 @@ namespace Usuarios.Tests.Usuarios.Infrastructure.QueryHandlers
         private readonly string ExistingRolIdString;
         private readonly VORolId ExistingRolIdVO;
         private readonly VORolNombre ExistingRolNombreVO;
+        private readonly VORolKeycloakId ExistingRolKeycloakIdVO;
         private readonly Rol ExistingRol;
         private readonly GetRolByIdQuery ValidQuery;
 
@@ -32,8 +33,9 @@ namespace Usuarios.Tests.Usuarios.Infrastructure.QueryHandlers
             ExistingRolIdString = Guid.NewGuid().ToString();
             ExistingRolIdVO = new VORolId(ExistingRolIdString);
             ExistingRolNombreVO = new VORolNombre("Administrador");
+            ExistingRolKeycloakIdVO = new VORolKeycloakId("Cliente_Simulado");
 
-            ExistingRol = new Rol(ExistingRolIdVO, ExistingRolNombreVO);
+            ExistingRol = new Rol(ExistingRolIdVO, ExistingRolNombreVO, ExistingRolKeycloakIdVO);
 
             ValidQuery = new GetRolByIdQuery(ExistingRolIdString);
         }

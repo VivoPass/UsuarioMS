@@ -21,6 +21,7 @@ namespace Usuarios.Tests.Usuarios.Infrastructure.QueryHandlers
         private readonly string ExistingRolIdString;
         private readonly VORolId ExistingRolIdVO;
         private readonly VORolNombre ExistingRolNombreVO;
+        private readonly VORolKeycloakId ExistingRolKeycloakIdVO;
         private readonly Rol ExistingRol;
         private readonly GetRolByNombreQuery ValidQuery;
 
@@ -35,8 +36,10 @@ namespace Usuarios.Tests.Usuarios.Infrastructure.QueryHandlers
             ExistingRolIdString = Guid.NewGuid().ToString();
             ExistingRolIdVO = new VORolId(ExistingRolIdString);
             ExistingRolNombreVO = new VORolNombre(ExistingRolNombre);
+            ExistingRolKeycloakIdVO = new VORolKeycloakId("Cliente_Simulado");
+
             // Entidad Rol Existente (Simulación del output del repositorio)
-            ExistingRol = new Rol(ExistingRolIdVO, ExistingRolNombreVO);
+            ExistingRol = new Rol(ExistingRolIdVO, ExistingRolNombreVO, ExistingRolKeycloakIdVO);
             // Query de Entrada Válida
             ValidQuery = new GetRolByNombreQuery(ExistingRolNombre);
         }

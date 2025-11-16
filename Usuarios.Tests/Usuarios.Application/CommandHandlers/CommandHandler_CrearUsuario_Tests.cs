@@ -37,8 +37,9 @@ namespace Usuarios.Tests.Usuarios.Application.CommandHandlers
 
             // --- DATOS ---
             mockRolId = new VORolId(Guid.NewGuid().ToString());
-            var mockRolNombre = new VORolNombre("Cliente_Simulado");
-            rolExistente = new Rol(mockRolId, mockRolNombre);
+            var mockRolNombre = new VORolNombre("Cliente Simulado");
+            var mockRolKeycloakId = new VORolKeycloakId("Cliente_Simulado");
+            rolExistente = new Rol(mockRolId, mockRolNombre, mockRolKeycloakId);
 
             expectedId = Guid.NewGuid().ToString();
             command = new CrearUsuarioCommand(new CrearUsuarioDTO
@@ -50,7 +51,7 @@ namespace Usuarios.Tests.Usuarios.Application.CommandHandlers
                 Telefono = "1234567890",
                 Direccion = "123 Test St",
                 FotoPerfil = "http://example.com/profile.jpg",
-                Rol = Guid.NewGuid().ToString()
+                Rol = "usuario_final"
             });
 
             factoryOutput = new Usuario(
@@ -62,7 +63,7 @@ namespace Usuarios.Tests.Usuarios.Application.CommandHandlers
                 telefono: new VOTelefono(command.UsuarioDto.Telefono),
                 direccion: new VODireccion(command.UsuarioDto.Direccion),
                 fotoPerfil: new VOFotoPerfil(command.UsuarioDto.FotoPerfil),
-                rol: new VORolId(new Guid(command.UsuarioDto.Rol).ToString())
+                rol: new VORolKeycloakId(command.UsuarioDto.Rol)
             );
         }
 
@@ -76,9 +77,9 @@ namespace Usuarios.Tests.Usuarios.Application.CommandHandlers
             MockUsuarioRepo.Setup(u => u.GetByCorreo(It.IsAny<string>())).ReturnsAsync((Usuario)null);
 
             MockUsuarioFactory
-                .Setup(f => f.Crear(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateOnly>(), 
-                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
-                    It.IsAny<string>()))
+                .Setup(f => f.Crear(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), 
+                    It.IsAny<DateOnly>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
+                    It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(factoryOutput);
 
             MockUsuarioRepo.Setup(u => u.CrearUsuario(It.IsAny<Usuario>())).Returns(Task.CompletedTask);
@@ -132,7 +133,7 @@ namespace Usuarios.Tests.Usuarios.Application.CommandHandlers
 
             MockUsuarioFactory
                 .Setup(f => f.Crear(
-                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateOnly>(),
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateOnly>(),
                     It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
                     It.IsAny<string>()))
                 .Returns(factoryOutput);

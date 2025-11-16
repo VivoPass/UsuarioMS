@@ -11,11 +11,11 @@ namespace Usuarios.Domain.Aggregates
         public VOCorreo Correo { get; private set; }
         public VOTelefono Telefono { get; private set; }
         public VODireccion Direccion { get; private set; }
-        public VOFotoPerfil FotoPerfil { get; private set; }
-        public VORolId Rol { get; private set; }
+        public VOFotoPerfil? FotoPerfil { get; private set; }
+        public VORolKeycloakId Rol { get; private set; }
 
         public Usuario(VOId id, VONombre nombre, VOApellido apellido, VOFechaNacimiento fechaNacimiento, VOCorreo correo, VOTelefono telefono,
-            VODireccion direccion, VOFotoPerfil fotoPerfil, VORolId rol)
+            VODireccion direccion, VORolKeycloakId rol, VOFotoPerfil? fotoPerfil = null)
         {
             Id = id;
             Nombre = nombre;
