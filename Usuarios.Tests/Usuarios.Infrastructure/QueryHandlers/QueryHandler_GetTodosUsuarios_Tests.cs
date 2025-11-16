@@ -30,7 +30,7 @@ namespace Usuarios.Tests.Usuarios.Infrastructure.QueryHandlers
             Handler = new GetTodosUsuariosQueryHandler(MockUsuarioRepository.Object, MockLogger.Object);
 
             // --- DATOS ---
-            var rolClienteId = new VORolId(Guid.NewGuid().ToString());
+            var rolClienteId = new VORolKeycloakId("administrador");
             UsuarioUno = new Usuario(
                 id: new VOId(Guid.NewGuid().ToString()),
                 nombre: new VONombre("Juan"),

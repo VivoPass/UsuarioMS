@@ -31,12 +31,8 @@ namespace Usuarios.Application.Validations
                 .NotEmpty().WithMessage("La dirección es obligatoria.")
                 .MaximumLength(100).WithMessage("La dirección no debe superar los 100 caracteres.");
 
-            RuleFor(x => x.FotoPerfil)
-                .NotEmpty().WithMessage("La foto de perfil es obligatoria.");
-
             RuleFor(x => x.Rol)
-                .NotEmpty().WithMessage("El ID del rol es obligatorio.")
-                .Must(id => Guid.TryParse(id, out _)).WithMessage("El RolId debe ser un GUID válido.");
+                .NotEmpty().WithMessage("El ID del rol es obligatorio.");
         }
     }
 }

@@ -24,6 +24,11 @@
     "Order": 0,
     "Parameters": [
       {
+        "Name": "Id",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
         "Name": "Nombre",
         "Type": "System.String",
         "IsRequired": false

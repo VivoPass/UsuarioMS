@@ -6,27 +6,27 @@ namespace Usuarios.Domain.Factories
 {
     public class UsuarioFactory: IUsuarioFactory
     {
-        public Usuario Crear (string nombre, string apellido, DateOnly fechaNacimiento, string correo, string telefono, string direccion, string fotoPerfil, string rol)
+        public Usuario Crear (string id, string nombre, string apellido, DateOnly fechaNacimiento, string correo, string telefono, string direccion, string fotoPerfil, string rol)
         {
-            VOId id = new VOId(Guid.NewGuid().ToString());
+            VOId Id = new VOId(id);
             VONombre Nombre = new VONombre(nombre);
             VOApellido Apellido = new VOApellido(apellido);
             VOFechaNacimiento FechaNacimiento = new VOFechaNacimiento(fechaNacimiento);
             VOCorreo Correo = new VOCorreo(correo);
             VOTelefono Telefono = new VOTelefono(telefono);
             VODireccion Direccion = new VODireccion(direccion);
+            VORolKeycloakId Rol = new VORolKeycloakId(rol);
             VOFotoPerfil FotoPerfil = new VOFotoPerfil(fotoPerfil);
-            VORolId Rol = new VORolId(rol);
 
-            var NuevoUsuario = new Usuario(id, Nombre, Apellido, FechaNacimiento, Correo, Telefono, Direccion, FotoPerfil, Rol);
+            var NuevoUsuario = new Usuario(Id, Nombre, Apellido, FechaNacimiento, Correo, Telefono, Direccion, Rol, FotoPerfil);
 
             return NuevoUsuario;
         }
 
         public Usuario Load(VOId id, VONombre nombre, VOApellido apellido, VOFechaNacimiento fechaNacimiento, VOCorreo correo, VOTelefono telefono,
-            VODireccion direccion, VOFotoPerfil fotoPerfil, VORolId rol)
+            VODireccion direccion, VORolKeycloakId rol, VOFotoPerfil fotoPerfil)
         {
-            return new Usuario(id, nombre, apellido, fechaNacimiento, correo, telefono, direccion, fotoPerfil, rol);
+            return new Usuario(id, nombre, apellido, fechaNacimiento, correo, telefono, direccion, rol, fotoPerfil);
         }
     }
 }

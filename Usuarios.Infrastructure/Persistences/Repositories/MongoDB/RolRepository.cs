@@ -41,7 +41,7 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
             Logger.Debug($"Buscando rol por ID: {rolId} en MongoDB.");
             try
             {
-                var filter = Builders<BsonDocument>.Filter.Eq("_id", rolId);
+                var filter = Builders<BsonDocument>.Filter.Eq("idKeycloak", rolId);
                 var bsonRol = await RolCollection.Find(filter).FirstOrDefaultAsync();
 
                 if (bsonRol == null)
@@ -50,12 +50,14 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
                     return null;
                 }
 
-                var idRol = new VORolId(rolId);
+                var idRol = new VORolId(bsonRol["_id"].AsString);
                 var nombre = new VORolNombre(bsonRol["nombre"].AsString);
+                var idRolKeycloak = new VORolKeycloakId(rolId);
 
                 var rol = RolFactory.Load(
                     idRol,
-                    nombre
+                    nombre,
+                    idRolKeycloak
                 );
 
                 Logger.Debug($"Rol ID {rolId} encontrado y reconstruido.");
@@ -91,10 +93,12 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
 
                 var idRol = new VORolId(bsonRol["_id"].AsString);
                 var nombre = new VORolNombre(nombreRol);
+                var idRolKeycloak = new VORolKeycloakId(bsonRol["idKeycloak"].AsString);
 
                 var rol = RolFactory.Load(
                     idRol,
-                    nombre
+                    nombre,
+                    idRolKeycloak
                 );
 
                 Logger.Debug($"Rol con nombre {nombreRol} encontrado y reconstruido.");
@@ -130,10 +134,12 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
                 {
                     var idRol = new VORolId(bsonRol["_id"].AsString);
                     var nombre = new VORolNombre(bsonRol["nombre"].AsString);
+                    var idRolKeycloak = new VORolKeycloakId(bsonRol["idKeycloak"].AsString);
 
                     return RolFactory.Load(
                         idRol,
-                        nombre
+                        nombre,
+                        idRolKeycloak
                     );
                 }).ToList();
 

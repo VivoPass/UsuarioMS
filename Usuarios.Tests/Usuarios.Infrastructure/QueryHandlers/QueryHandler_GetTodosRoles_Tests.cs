@@ -32,12 +32,14 @@ namespace Usuarios.Tests.Usuarios.Infrastructure.QueryHandlers
             // Rol 1: Cliente
             RolCliente = new Rol(
                 new VORolId(Guid.NewGuid().ToString()),
-                new VORolNombre("Cliente")
+                new VORolNombre("Cliente"),
+                new VORolKeycloakId("cliente")
             );
             // Rol 2: Administrador
             RolAdmin = new Rol(
                 new VORolId(Guid.NewGuid().ToString()),
-                new VORolNombre("Administrador")
+                new VORolNombre("Administrador"),
+                new VORolKeycloakId("administrador")
             );
             ListaRolesExistentes = new List<Rol> { RolCliente, RolAdmin };
 

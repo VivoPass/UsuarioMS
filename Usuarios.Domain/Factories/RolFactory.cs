@@ -6,9 +6,9 @@ namespace Usuarios.Domain.Factories
 {
     public class RolFactory: IRolFactory
     {
-        public Rol Load(VORolId id, VORolNombre nombre)
+        public Rol Load(VORolId id, VORolNombre nombre, VORolKeycloakId rolKeycloakId)
         {
-            return new Rol(id, nombre);
+            return new Rol(id, nombre, rolKeycloakId);
         }
     }
 }

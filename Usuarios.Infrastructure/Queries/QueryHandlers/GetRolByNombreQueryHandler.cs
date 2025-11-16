@@ -34,7 +34,8 @@ namespace Usuarios.Infrastructure.Queries.QueryHandlers
                 var rolDto = new RolDTO
                 {
                     IdRol = rol.IdRol.Valor,
-                    NombreRol = rol.NombreRol.Valor
+                    NombreRol = rol.NombreRol.Valor,
+                    IdRolKeycloak = rol.RolKeycloakId.Valor
                 };
 
                 Logger.Info($"Consulta exitosa. Rol ID {rol.IdRol.Valor} devuelto.");

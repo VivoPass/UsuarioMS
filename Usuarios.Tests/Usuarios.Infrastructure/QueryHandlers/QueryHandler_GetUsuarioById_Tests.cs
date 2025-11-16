@@ -45,7 +45,7 @@ namespace Usuarios.Tests.Usuarios.Infrastructure.QueryHandlers
                 telefono: new VOTelefono("5551234"),
                 direccion: new VODireccion("Av. Principal 456"),
                 fotoPerfil: new VOFotoPerfil("foto_carlos.jpg"),
-                rol: new VORolId(Guid.NewGuid().ToString())
+                rol: new VORolKeycloakId("usuario_final")
             );
 
             ValidQuery = new GetUsuarioByIdQuery(ExistingUserIdString);

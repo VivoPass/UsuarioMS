@@ -36,7 +36,8 @@ namespace Usuarios.Infrastructure.Queries.QueryHandlers
                 var roles = rol.Select(u => new RolDTO
                 {
                     IdRol = u.IdRol.Valor,
-                    NombreRol = u.NombreRol.Valor
+                    NombreRol = u.NombreRol.Valor,
+                    IdRolKeycloak = u.RolKeycloakId.Valor
                 }).ToList();
 
                 Logger.Info($"Consulta exitosa. Se devolvió una lista de {roles.Count} RolDTOs.");
