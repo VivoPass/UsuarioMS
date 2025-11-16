@@ -54,7 +54,7 @@ namespace Usuarios.Tests.Usuarios.Application.CommandHandlers
                 telefono: new VOTelefono("1234567890"),
                 direccion: new VODireccion("Direccion Original"),
                 fotoPerfil: new VOFotoPerfil("foto_original.jpg"),
-                rol: new VORolId(Guid.NewGuid().ToString())
+                rol: new VORolKeycloakId("usuario_final")
             );
 
             // Comando de Entrada Válido

@@ -31,7 +31,7 @@ namespace Usuarios.Tests.Usuarios.Infrastructure.QueryHandlers
             // --- DATOS ---
             // Datos del Usuario
             ExistingEmail = "usuario.valido@sistema.com";
-            var rolClienteId = new VORolId(Guid.NewGuid().ToString());
+            var rolClienteId = new VORolKeycloakId("usuario_final");
 
             // Entidad Usuario Existente (Simulación del output del repositorio)
             ExistingUsuario = new Usuario(

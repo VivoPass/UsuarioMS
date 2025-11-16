@@ -100,15 +100,25 @@ EndpointConvention.Map<HistorialActividadEvent>(new Uri("queue:" + Environment.G
 // Configuración CORS permisiva (¡Solo para desarrollo!)
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
-    {
-        policy.AllowAnyOrigin()  // Permite cualquier dominio
-            .AllowAnyMethod()  // GET, POST, PUT, DELETE, etc.
-            .AllowAnyHeader(); // Cualquier cabecera
-    });
+    // Define la política "AllowAll" para desarrollo
+    options.AddPolicy("AllowAll",
+        builder =>
+        {
+            // Permite cualquier origen (dominio), método (GET, POST, etc.) y encabezado.
+            // Esto es crucial para que el entorno de Canvas (iframe) pueda conectarse a localhost.
+            builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
 });
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 // Habilitar CORS
 app.UseCors("AllowAll");

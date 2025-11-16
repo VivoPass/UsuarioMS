@@ -5,5 +5,6 @@ namespace Usuarios.Application.DTOs
     {
         public string IdRol { get; set; }
         public string NombreRol { get; set; }
+        public string IdRolKeycloak { get; set; }
     }
 }

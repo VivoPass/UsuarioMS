@@ -5,6 +5,6 @@ namespace Usuarios.Domain.Interfaces
 {
     public interface IRolFactory
     {
-        Rol Load(VORolId id, VORolNombre nombre);
+        Rol Load(VORolId id, VORolNombre nombre, VORolKeycloakId rolKeycloakId);
     }
 }

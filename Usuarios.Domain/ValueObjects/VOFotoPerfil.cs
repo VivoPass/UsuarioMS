@@ -8,9 +8,6 @@ namespace Usuarios.Domain.ValueObjects
 
         public VOFotoPerfil(string valor)
         {
-            if (string.IsNullOrWhiteSpace(valor))
-                throw new FotoPerfilUsuarioException();
-
             Valor = valor;
         }
 

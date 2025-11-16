@@ -18,6 +18,9 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "Id": {
+                    "type": "string"
+                  },
                   "Nombre": {
                     "type": "string"
                   },
@@ -51,6 +54,9 @@
                 }
               },
               "encoding": {
+                "Id": {
+                  "style": "form"
+                },
                 "Nombre": {
                   "style": "form"
                 },

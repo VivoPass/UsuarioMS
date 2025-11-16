@@ -45,17 +45,19 @@ namespace Usuarios.API.Controllers
         /// <param name="imagen">Archivo de imagen de perfil enviado en el formulario.</param>
         /// <returns>Retorna el ID del usuario creado (HTTP 201 Created).</returns>
         [HttpPost("crearUsuario")]
-        public async Task<IActionResult> CrearUsuario([FromForm] CrearUsuarioDTO usuarioDto, IFormFile imagen)
+        public async Task<IActionResult> CrearUsuario([FromForm] CrearUsuarioDTO usuarioDto, IFormFile? imagen)
         {
             try
             {
-                _logger.Debug($"Subiendo imagen: {imagen.FileName} para el DTO.");
-                using var stream = imagen.OpenReadStream();
-                var url = await CloudinaryService.SubirImagen(stream, imagen.FileName);
-                usuarioDto.FotoPerfil = url;
-                _logger.Debug($"URL de imagen obtenida: {url}. DTO listo para el Command.");
+                if (imagen != null)
+                {
+                    _logger.Debug($"Subiendo imagen: {imagen.FileName} para el DTO.");
+                    using var stream = imagen.OpenReadStream();
+                    var url = await CloudinaryService.SubirImagen(stream, imagen.FileName);
+                    usuarioDto.FotoPerfil = url;
+                    _logger.Debug($"URL de imagen obtenida: {url}. DTO listo para el Command.");
+                }
 
-                //_logger.Debug($"Enviando comando CrearUsuarioCommand: {CrearUsuarioCommand(usuarioDto).GetType().Name}.");
                 var userId = await Mediator.Send(new CrearUsuarioCommand(usuarioDto));
                 if (userId == null)
                 {
@@ -90,10 +92,13 @@ namespace Usuarios.API.Controllers
         {
             try
             {
-                _logger.Debug($"Subiendo nueva imagen para usuario ID: {id}.");
-                using var stream = nuevaImagen.OpenReadStream();
-                var url = await CloudinaryService.SubirImagen(stream, nuevaImagen.FileName);
-                usuarioDto.FotoPerfil = url;
+                if (nuevaImagen != null)
+                {
+                    _logger.Debug($"Subiendo nueva imagen para usuario ID: {id}.");
+                    using var stream = nuevaImagen.OpenReadStream();
+                    var url = await CloudinaryService.SubirImagen(stream, nuevaImagen.FileName);
+                    usuarioDto.FotoPerfil = url;
+                }
 
                 _logger.Debug($"Enviando comando ModificarUsuarioCommand para ID: {id}.");
                 var result = await Mediator.Send(new ModificarUsuarioCommand(id, usuarioDto));

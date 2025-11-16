@@ -50,7 +50,7 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
                     { "correo", usuario.Correo.Valor },
                     {"telefono", usuario.Telefono.Valor},
                     {"direccion", usuario.Direccion.Valor},
-                    {"fotoPerfil", usuario.FotoPerfil.Valor},
+                    {"fotoPerfil", usuario.FotoPerfil.Valor ?? ""},
                     { "rol", usuario.Rol.Valor },
                     { "createdAt", DateTime.UtcNow },
                     { "updatedAt", DateTime.UtcNow }
@@ -99,10 +99,10 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
                 var telefono = new VOTelefono(bsonUsuario["telefono"].AsString);
                 var direccion = new VODireccion(bsonUsuario["direccion"].AsString);
                 var fotoPerfil = new VOFotoPerfil(bsonUsuario["fotoPerfil"].AsString);
-                var rol = new VORolId(bsonUsuario["rol"].AsString);
+                var rol = new VORolKeycloakId(bsonUsuario["rol"].AsString);
 
                 var usuario = UsuarioFactory.Load(
-                    idUsuario, nombre, apellido, fechaNacimiento, correoUsuario, telefono, direccion, fotoPerfil, rol
+                    idUsuario, nombre, apellido, fechaNacimiento, correoUsuario, telefono, direccion, rol, fotoPerfil
                 );
 
                 Logger.Debug($"Usuario con correo {correo} encontrado y reconstruido.");
@@ -148,10 +148,10 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
                 var telefono = new VOTelefono(bsonUsuario["telefono"].AsString);
                 var direccion = new VODireccion(bsonUsuario["direccion"].AsString);
                 var fotoPerfil = new VOFotoPerfil(bsonUsuario["fotoPerfil"].AsString);
-                var rol = new VORolId(bsonUsuario["rol"].AsString);
+                var rol = new VORolKeycloakId(bsonUsuario["rol"].AsString);
 
                 var usuario = UsuarioFactory.Load(
-                    idUsuario, nombre, apellido, fechaNacimiento, correo, telefono, direccion, fotoPerfil, rol
+                    idUsuario, nombre, apellido, fechaNacimiento, correo, telefono, direccion, rol, fotoPerfil
                 );
 
                 Logger.Debug($"Usuario ID {id} encontrado y reconstruido.");
@@ -236,10 +236,10 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
                     var telefono = new VOTelefono(bsonUsuario["telefono"].AsString);
                     var direccion = new VODireccion(bsonUsuario["direccion"].AsString);
                     var fotoPerfil = new VOFotoPerfil(bsonUsuario["fotoPerfil"].AsString);
-                    var rol = new VORolId(bsonUsuario["rol"].AsString);
+                    var rol = new VORolKeycloakId(bsonUsuario["rol"].AsString);
 
                     return UsuarioFactory.Load(
-                        idUsuario, nombre, apellido, fechaNacimiento, correo, telefono, direccion, fotoPerfil, rol
+                        idUsuario, nombre, apellido, fechaNacimiento, correo, telefono, direccion, rol, fotoPerfil
                     );
                 }).ToList();
 
