@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Usuarios.API</name>
+    </assembly>
+    <members>
+        <member name="T:Usuarios.API.Controllers.UsuariosController">
+            <summary>
+            Controlador API para la gestión de usuarios, roles y actividades relacionadas.
+            </summary>
+            <remarks>
+            Este controlador actúa como la puerta de entrada a las operaciones del microservicio de Usuarios,
+            utilizando CQRS (Mediator) para separar comandos (escritura) y queries (lectura),
+            y MassTransit (PublishEndpoint) para la comunicación asíncrona de eventos.
+            </remarks>
+        </member>
+        <member name="M:Usuarios.API.Controllers.UsuariosController.CrearUsuario(Usuarios.Application.DTOs.CrearUsuarioDTO,Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Crea un nuevo usuario.
+            </summary>
+            <param name="usuarioDto">Datos del nuevo usuario (incluye campos de formulario).</param>
+            <param name="imagen">Archivo de imagen de perfil enviado en el formulario.</param>
+            <returns>Retorna el ID del usuario creado (HTTP 201 Created).</returns>
+        </member>
+        <member name="M:Usuarios.API.Controllers.UsuariosController.ModificarUsuarioById(System.String,Usuarios.Application.DTOs.ModificarUsuarioDTO,Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Modifica un usuario existente.
+            </summary>
+            <param name="id">ID del usuario a modificar (FromQuery).</param>
+            <param name="usuarioDto">Datos del usuario a modificar.</param>
+            <param name="nuevaImagen">Nueva imagen de perfil opcional.</param>
+            <returns>HTTP 200 OK si la actualización fue exitosa, 404 Not Found si el usuario no pudo ser actualizado.</returns>
+        </member>
+        <member name="M:Usuarios.API.Controllers.UsuariosController.GetUsuarioByCorreo(System.String)">
+            <summary>
+            Obtiene los detalles de un usuario a partir de su correo electrónico.
+            </summary>
+            <param name="correo">Correo electrónico del usuario.</param>
+            <returns>Retorna <see cref="T:Usuarios.Application.DTOs.UsuarioDTO"/> si es encontrado (HTTP 200 OK), o 404 Not Found.</returns>
+        </member>
+        <member name="M:Usuarios.API.Controllers.UsuariosController.GetUsuarioById(System.String)">
+            <summary>
+            Obtiene los detalles de un usuario a partir de su ID.
+            </summary>
+            <param name="id">ID del usuario.</param>
+            <returns>Retorna <see cref="T:Usuarios.Application.DTOs.UsuarioDTO"/> si es encontrado (HTTP 200 OK), o 404 Not Found.</returns>
+        </member>
+        <member name="M:Usuarios.API.Controllers.UsuariosController.GetTodosUsuarios">
+            <summary>
+            Obtiene la lista completa de todos los usuarios registrados.
+            </summary>
+            <returns>Retorna una lista de <see cref="T:Usuarios.Application.DTOs.UsuarioDTO"/> (HTTP 200 OK) o 404 Not Found si la lista está vacía.</returns>
+        </member>
+        <member name="M:Usuarios.API.Controllers.UsuariosController.GetRolByNombre(System.String)">
+            <summary>
+            Obtiene los detalles de un rol a partir de su nombre.
+            </summary>
+            <param name="nombre">Nombre del rol.</param>
+            <returns>Retorna <see cref="T:Usuarios.Application.DTOs.RolDTO"/> si es encontrado (HTTP 200 OK), o 404 Not Found.</returns>
+        </member>
+        <member name="M:Usuarios.API.Controllers.UsuariosController.GetRolById(System.String)">
+            <summary>
+            Obtiene los detalles de un rol a partir de su ID.
+            </summary>
+            <param name="id">ID del rol.</param>
+            <returns>Retorna <see cref="T:Usuarios.Application.DTOs.RolDTO"/> si es encontrado (HTTP 200 OK), o 404 Not Found.</returns>
+        </member>
+        <member name="M:Usuarios.API.Controllers.UsuariosController.GetTodosRoles">
+            <summary>
+            Obtiene la lista completa de todos los roles disponibles.
+            </summary>
+            <returns>Retorna una lista de <see cref="T:Usuarios.Application.DTOs.RolDTO"/> (HTTP 200 OK) o 404 Not Found si la lista está vacía.</returns>
+        </member>
+        <member name="M:Usuarios.API.Controllers.UsuariosController.GetHistActByUsuarioId(System.String)">
+            <summary>
+            Obtiene el historial de actividad de un usuario específico.
+            </summary>
+            <param name="id">ID del usuario.</param>
+            <returns>Retorna una lista de actividades (HTTP 200 OK) o 404 Not Found si no hay actividades.</returns>
+        </member>
+        <member name="M:Usuarios.API.Controllers.UsuariosController.AgregarAct(Usuarios.Application.DTOs.CrearActUsuarioDTO)">
+            <summary>
+            Publica un evento de actividad del usuario en el bus de mensajes.
+            </summary>
+            <param name="createUserActivityDto">Detalles de la actividad a registrar.</param>
+            <returns>HTTP 200 OK si el evento fue publicado correctamente.</returns>
+        </member>
+    </members>
+</doc>
