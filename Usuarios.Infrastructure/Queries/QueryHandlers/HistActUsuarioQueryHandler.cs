@@ -21,6 +21,11 @@ namespace Usuarios.Infrastructure.Queries.QueryHandlers
             Logger.Info($"Iniciando HistActUsuarioQuery para Usuario ID: {request.IdUsuario}");
             try
             {
+                if (string.IsNullOrWhiteSpace(request.IdUsuario))
+                {
+                    Logger.Warn("El ID de usuario proporcionado es nulo o vacío. Lanzando excepción.");
+                    throw new HistActUsuarioQueryHandlerInvalidIdException();
+                }
                 Logger.Debug($"Consultando el historial de actividad del repositorio para ID {request.IdUsuario}.");
                 var activities = await UsuarioHistActRepository.GetByIdUsuarioHistAct(request.IdUsuario, DateTime.Today);
 

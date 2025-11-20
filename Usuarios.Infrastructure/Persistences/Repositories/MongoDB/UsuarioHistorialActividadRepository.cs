@@ -94,8 +94,8 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
             try
             {
                 var filter = Builders<BsonDocument>.Filter.And(
-                    Builders<BsonDocument>.Filter.Eq("_idUsuario", idUsuario),
-                    Builders<BsonDocument>.Filter.Gte("timestamp", timestamp)
+                    Builders<BsonDocument>.Filter.Eq("_idUsuario", idUsuario)
+                    //, Builders<BsonDocument>.Filter.Gte("timestamp", timestamp)
                 );
 
                 var bsonUserActivity = await UsuarioHistActCollection.Find(filter).ToListAsync();
