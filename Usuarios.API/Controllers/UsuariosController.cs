@@ -2,6 +2,7 @@
 using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using Usuarios.Application.Commands;
 using Usuarios.Application.DTOs;
 using Usuarios.Application.Events;
@@ -16,7 +17,7 @@ namespace Usuarios.API.Controllers
     /// </summary>
     /// <remarks>
     /// Este controlador actúa como la puerta de entrada a las operaciones del microservicio de Usuarios,
-    /// utilizando CQRS (Mediator) para separar comandos (escritura) y queries (lectura),
+    /// utilizando (Mediator) para separar comandos (escritura) y queries (lectura),
     /// y MassTransit (PublishEndpoint) para la comunicación asíncrona de eventos.
     /// </remarks>
     [ApiController]
@@ -44,6 +45,9 @@ namespace Usuarios.API.Controllers
         /// <param name="imagen">Archivo de imagen de perfil enviado en el formulario.</param>
         /// <returns>Retorna el ID del usuario creado (HTTP 201 Created).</returns>
         [HttpPost("crearUsuario")]
+        [ProducesResponseType(typeof(object), (int)HttpStatusCode.Created)] // 201 Created
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)] // 400 Bad Request
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)] // 500 Internal Server Error
         public async Task<IActionResult> CrearUsuario([FromForm] CrearUsuarioDTO usuarioDto, IFormFile? imagen)
         {
             try
@@ -87,6 +91,9 @@ namespace Usuarios.API.Controllers
         /// <param name="nuevaImagen">Nueva imagen de perfil opcional.</param>
         /// <returns>HTTP 200 OK si la actualización fue exitosa, 404 Not Found si el usuario no pudo ser actualizado.</returns>
         [HttpPatch("modificarUsuario")]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)] // 200 OK
+        [ProducesResponseType((int)HttpStatusCode.NotFound)] // 404 Not Found
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)] // 500 Internal Server Error
         public async Task<IActionResult> ModificarUsuarioById([FromQuery] string id, [FromForm] ModificarUsuarioDTO usuarioDto, IFormFile? nuevaImagen)
         {
             try
@@ -108,6 +115,20 @@ namespace Usuarios.API.Controllers
                     return NotFound("El usuario no pudo ser actualizado.");
                 }
 
+                //Publicacion en el historial de actividad
+                var createUserActivityDto = new CrearActUsuarioDTO
+                {
+                    IdUsuario = id,
+                    Accion = "Datos del perfil modificados."
+                };
+                _logger.Debug($"Publicando evento de actividad para Usuario: {createUserActivityDto.IdUsuario}. Acción: {createUserActivityDto.Accion}.");
+                await PublishEndpoint.Publish(new HistorialActividadEvent(
+                    createUserActivityDto.IdUsuario,
+                    createUserActivityDto.Accion,
+                    DateTime.UtcNow
+                ));
+                _logger.Info("Evento de actividad publicado correctamente.");
+
                 _logger.Info($"Usuario ID: {id} actualizado exitosamente.");
                 return Ok("Usuario actualizado exitosamente.");
             }
@@ -126,6 +147,9 @@ namespace Usuarios.API.Controllers
         /// <param name="correo">Correo electrónico del usuario.</param>
         /// <returns>Retorna <see cref="UsuarioDTO"/> si es encontrado (HTTP 200 OK), o 404 Not Found.</returns>
         [HttpGet("getUsuarioByCorreo")]
+        [ProducesResponseType(typeof(UsuarioDTO), (int)HttpStatusCode.OK)] // 200 OK
+        [ProducesResponseType((int)HttpStatusCode.NotFound)] // 404 Not Found
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)] // 500 Internal Server Error
         public async Task<IActionResult> GetUsuarioByCorreo ([FromQuery] string correo)
         {
             try
@@ -156,6 +180,9 @@ namespace Usuarios.API.Controllers
         /// <param name="id">ID del usuario.</param>
         /// <returns>Retorna <see cref="UsuarioDTO"/> si es encontrado (HTTP 200 OK), o 404 Not Found.</returns>
         [HttpGet("getUsuarioById")]
+        [ProducesResponseType(typeof(UsuarioDTO), (int)HttpStatusCode.OK)] // 200 OK
+        [ProducesResponseType((int)HttpStatusCode.NotFound)] // 404 Not Found
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)] // 500 Internal Server Error
         public async Task<IActionResult> GetUsuarioById([FromQuery] string id)
         {
             try
@@ -186,6 +213,9 @@ namespace Usuarios.API.Controllers
         /// </summary>
         /// <returns>Retorna una lista de <see cref="UsuarioDTO"/> (HTTP 200 OK) o 404 Not Found si la lista está vacía.</returns>
         [HttpGet("getTodosUsuarios")]
+        [ProducesResponseType(typeof(IEnumerable<UsuarioDTO>), (int)HttpStatusCode.OK)] // 200 OK
+        [ProducesResponseType((int)HttpStatusCode.NotFound)] // 404 Not Found
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)] // 500 Internal Server Error
         public async Task<IActionResult> GetTodosUsuarios()
         {
             try
@@ -209,6 +239,7 @@ namespace Usuarios.API.Controllers
         }
         #endregion
 
+
         #region GetRolByNombre([FromQuery] string nombre)
         /// <summary>
         /// Obtiene los detalles de un rol a partir de su nombre.
@@ -216,6 +247,9 @@ namespace Usuarios.API.Controllers
         /// <param name="nombre">Nombre del rol.</param>
         /// <returns>Retorna <see cref="RolDTO"/> si es encontrado (HTTP 200 OK), o 404 Not Found.</returns>
         [HttpGet("getRolByNombre")]
+        [ProducesResponseType(typeof(RolDTO), (int)HttpStatusCode.OK)] // 200 OK
+        [ProducesResponseType((int)HttpStatusCode.NotFound)] // 404 Not Found
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)] // 500 Internal Server Error
         public async Task<IActionResult> GetRolByNombre([FromQuery] string nombre)
         {
             try
@@ -246,6 +280,9 @@ namespace Usuarios.API.Controllers
         /// <param name="id">ID del rol.</param>
         /// <returns>Retorna <see cref="RolDTO"/> si es encontrado (HTTP 200 OK), o 404 Not Found.</returns>
         [HttpGet("getRolById")]
+        [ProducesResponseType(typeof(RolDTO), (int)HttpStatusCode.OK)] // 200 OK
+        [ProducesResponseType((int)HttpStatusCode.NotFound)] // 404 Not Found
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)] // 500 Internal Server Error
         public async Task<IActionResult> GetRolById([FromQuery] string id)
         {
             try
@@ -276,6 +313,9 @@ namespace Usuarios.API.Controllers
         /// </summary>
         /// <returns>Retorna una lista de <see cref="RolDTO"/> (HTTP 200 OK) o 404 Not Found si la lista está vacía.</returns>
         [HttpGet("getTodosRoles")]
+        [ProducesResponseType(typeof(IEnumerable<RolDTO>), (int)HttpStatusCode.OK)] // 200 OK
+        [ProducesResponseType((int)HttpStatusCode.NotFound)] // 404 Not Found
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)] // 500 Internal Server Error
         public async Task<IActionResult> GetTodosRoles()
         {
             try
@@ -299,6 +339,7 @@ namespace Usuarios.API.Controllers
         }
         #endregion
 
+
         #region GetHistActByUsuarioId([FromQuery] string id)
         /// <summary>
         /// Obtiene el historial de actividad de un usuario específico.
@@ -306,6 +347,9 @@ namespace Usuarios.API.Controllers
         /// <param name="id">ID del usuario.</param>
         /// <returns>Retorna una lista de actividades (HTTP 200 OK) o 404 Not Found si no hay actividades.</returns>
         [HttpGet("activity")]
+        [ProducesResponseType(typeof(IEnumerable<object>), (int)HttpStatusCode.OK)] // 200 OK (asumiendo que devuelve una lista de objetos de actividad)
+        [ProducesResponseType((int)HttpStatusCode.NotFound)] // 404 Not Found
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)] // 500 Internal Server Error
         public async Task<IActionResult> GetHistActByUsuarioId([FromQuery] string id)
         {
             try
@@ -335,6 +379,9 @@ namespace Usuarios.API.Controllers
         /// <param name="createUserActivityDto">Detalles de la actividad a registrar.</param>
         /// <returns>HTTP 200 OK si el evento fue publicado correctamente.</returns>
         [HttpPost("publishActivity")]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)] // 200 OK
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)] // 400 Bad Request
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)] // 500 Internal Server Error
         public async Task<IActionResult> AgregarAct([FromBody] CrearActUsuarioDTO createUserActivityDto)
         {
             try
