@@ -10,7 +10,7 @@
             </summary>
             <remarks>
             Este controlador actúa como la puerta de entrada a las operaciones del microservicio de Usuarios,
-            utilizando CQRS (Mediator) para separar comandos (escritura) y queries (lectura),
+            utilizando (Mediator) para separar comandos (escritura) y queries (lectura),
             y MassTransit (PublishEndpoint) para la comunicación asíncrona de eventos.
             </remarks>
         </member>
