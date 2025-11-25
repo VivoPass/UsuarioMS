@@ -194,6 +194,18 @@ namespace Usuarios.Domain.Exceptions
         public HistActRepositoryNullException() : base("El componente IUsuarioHistorialActividad no fue inicializado correctamente.")
         { }
     }
+    //Auditoria Repository Exception
+    public class AuditoriaRepositoryException : Exception
+    {
+        public AuditoriaRepositoryException(Exception inner) : base("Fallo en AuditoriaRepository. " +
+                                                                    "No se pudo completar la operación.", inner)
+        { }
+    }
+    public class AuditoriaRepositoryNullException : Exception
+    {
+        public AuditoriaRepositoryNullException() : base("El componente IAuditoriaRepository no fue inicializado correctamente.")
+        { }
+    }
     #endregion
 
     #region QUERIES EXCEPTIONS

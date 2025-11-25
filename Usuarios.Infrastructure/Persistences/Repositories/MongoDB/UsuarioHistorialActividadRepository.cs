@@ -2,6 +2,7 @@
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
+using Usuarios.Domain.Aggregates;
 using Usuarios.Domain.Exceptions;
 using Usuarios.Infrastructure.Configurations;
 using Usuarios.Infrastructure.Interfaces;
@@ -20,11 +21,13 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
     {
         private readonly IMongoCollection<BsonDocument> UsuarioHistActCollection;
         private readonly ILog Logger;
+        private readonly IAuditoriaRepository AuditoriaRepository;
 
-        public UsuarioHistorialActividadRepository(MongoDBConfig mongoConfig, ILog logger)
+        public UsuarioHistorialActividadRepository(MongoDBConfig mongoConfig, ILog logger, IAuditoriaRepository auditoriaRepository)
         {
             UsuarioHistActCollection = mongoConfig.db.GetCollection<BsonDocument>("historial_act_usuarios");
             Logger = logger ?? throw new LoggerNullException();
+            AuditoriaRepository = auditoriaRepository ?? throw new AuditoriaRepositoryNullException();
         }
 
         #region AgregarHistAct(BsonDocument actUsuario)
@@ -43,6 +46,9 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
             {
                 await UsuarioHistActCollection.InsertOneAsync(actUsuario);
                 Logger.Debug($"Actividad registrada con éxito para Usuario: {userId}.");
+
+                await AuditoriaRepository.InsertarAuditoriaHistAct(userId, "INFO", "ACTIVIDAD_DE_USUARIO_REGISTRADA",
+                    $"Se registró una actividad del usuario con id '{userId}' con la acción '{accion}'.");
             }
             catch (Exception ex)
             {

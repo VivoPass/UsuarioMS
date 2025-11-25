@@ -1,11 +1,13 @@
-﻿using MongoDB.Bson;
+﻿using log4net;
+using log4net.Core;
+using MongoDB.Bson;
 using MongoDB.Driver;
-using log4net;
 using Usuarios.Domain.Aggregates;
 using Usuarios.Domain.Exceptions;
 using Usuarios.Domain.Interfaces;
 using Usuarios.Domain.ValueObjects;
 using Usuarios.Infrastructure.Configurations;
+using Usuarios.Infrastructure.Interfaces;
 
 namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
 {
@@ -22,12 +24,14 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
         private readonly IMongoCollection<BsonDocument> UsuarioCollection;
         private readonly IUsuarioFactory UsuarioFactory;
         private readonly ILog Logger;
+        private readonly IAuditoriaRepository AuditoriaRepository;
 
-        public UsuarioRepository(MongoDBConfig mongoConfig, IUsuarioFactory usuarioFactory, ILog logger)
+        public UsuarioRepository(MongoDBConfig mongoConfig, IUsuarioFactory usuarioFactory, ILog logger, IAuditoriaRepository auditoriaRepository)
         {
             UsuarioCollection = mongoConfig.db.GetCollection<BsonDocument>("usuarios");
             UsuarioFactory = usuarioFactory ?? throw new UsuarioFactoryNullException();
             Logger = logger ?? throw new LoggerNullException();
+            AuditoriaRepository = auditoriaRepository ?? throw new AuditoriaRepositoryNullException();
         }
 
         #region CrearUsuario(Usuario usuario)
@@ -58,6 +62,8 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
 
                 await UsuarioCollection.InsertOneAsync(bsonUser);
                 Logger.Info($"Usuario {usuario.Id.Valor} insertado exitosamente en MongoDB.");
+                await AuditoriaRepository.InsertarAuditoriaUsuario(usuario.Id.Valor, "INFO", "USUARIO_REGISTRADO",
+                    $"Se registró el usuario con id '{usuario.Id.Valor}' y correo '{usuario.Correo.Valor}'.");
             }
             catch (Exception ex)
             {
@@ -194,6 +200,9 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
                 }
 
                 Logger.Info($"Usuario ID: {usuario.Id.Valor} actualizado. {result.ModifiedCount} documento(s) modificado(s).");
+
+                await AuditoriaRepository.InsertarAuditoriaUsuario(usuario.Id.Valor, "INFO", "USUARIO_MODIFICADO",
+                    $"Se modificaron los datos del usuario con id '{usuario.Id.Valor}' y correo '{usuario.Correo.Valor}'.");
 
             }
             catch (Exception ex)

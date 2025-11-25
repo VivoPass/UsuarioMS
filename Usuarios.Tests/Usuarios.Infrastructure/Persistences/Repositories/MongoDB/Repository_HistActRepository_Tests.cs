@@ -4,6 +4,7 @@ using MongoDB.Driver;
 using Moq;
 using Usuarios.Domain.Exceptions;
 using Usuarios.Infrastructure.Configurations;
+using Usuarios.Infrastructure.Interfaces;
 using Usuarios.Infrastructure.Persistences.Repositories.MongoDB;
 
 namespace Usuarios.Tests.Usuarios.Infrastructure.Persistences.Repositories.MongoDB
@@ -13,10 +14,10 @@ namespace Usuarios.Tests.Usuarios.Infrastructure.Persistences.Repositories.Mongo
         private readonly Mock<IMongoDatabase> MockMongoDb;
         private readonly Mock<IMongoCollection<BsonDocument>> MockHistActCollection;
         private readonly Mock<ILog> MockLogger;
+        private readonly Mock<IAuditoriaRepository> MockAuditoria;
 
         private readonly UsuarioHistorialActividadRepository Repository;
 
-        // --- DATOS ---
         // --- DATOS ---
         private readonly string TestUserId = Guid.NewGuid().ToString();
         private const string TestAction = "LOGIN_EXITOSO";
@@ -33,6 +34,7 @@ namespace Usuarios.Tests.Usuarios.Infrastructure.Persistences.Repositories.Mongo
             MockMongoDb = new Mock<IMongoDatabase>();
             MockHistActCollection = new Mock<IMongoCollection<BsonDocument>>();
             MockLogger = new Mock<ILog>();
+            MockAuditoria = new Mock<IAuditoriaRepository>();
 
             MockMongoDb.Setup(d => d.GetCollection<BsonDocument>("historial_act_usuarios", It.IsAny<MongoCollectionSettings>()))
                 .Returns(MockHistActCollection.Object);
@@ -40,7 +42,7 @@ namespace Usuarios.Tests.Usuarios.Infrastructure.Persistences.Repositories.Mongo
             var MongoConfigInstance = new MongoDBConfig();
             MongoConfigInstance.db = MockMongoDb.Object;
 
-            Repository = new UsuarioHistorialActividadRepository(MongoConfigInstance, MockLogger.Object);
+            Repository = new UsuarioHistorialActividadRepository(MongoConfigInstance, MockLogger.Object, MockAuditoria.Object);
 
             // --- DATOS ---
             ActivityBsonDocument = new BsonDocument

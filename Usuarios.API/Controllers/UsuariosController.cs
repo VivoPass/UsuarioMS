@@ -8,7 +8,6 @@ using Usuarios.Application.Events;
 using Usuarios.Domain.Exceptions;
 using Usuarios.Infrastructure.Interfaces;
 using Usuarios.Infrastructure.Queries;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Usuarios.API.Controllers
 {
