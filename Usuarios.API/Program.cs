@@ -49,11 +49,13 @@ builder.Services.AddSwaggerGen(options =>
 
 // Registrar configuración de MongoDB
 builder.Services.AddSingleton<MongoDBConfig>();
+builder.Services.AddSingleton<AuditoriaDbConfig>();
 
 // REGISTRA EL REPOSITORIO ANTES DE MediatR
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IRolRepository, RolRepository>();
 builder.Services.AddScoped<IUsuarioHistorialActividad, UsuarioHistorialActividadRepository>();
+builder.Services.AddScoped<IAuditoriaRepository, AuditoriaRepository>();
 builder.Services.AddScoped<IUsuarioFactory, UsuarioFactory>();
 builder.Services.AddScoped<IRolFactory, RolFactory>();
 builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
