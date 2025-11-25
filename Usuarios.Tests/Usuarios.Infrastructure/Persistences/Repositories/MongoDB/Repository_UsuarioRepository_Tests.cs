@@ -8,6 +8,7 @@ using Usuarios.Domain.Exceptions;
 using Usuarios.Domain.Interfaces;
 using Usuarios.Domain.ValueObjects;
 using Usuarios.Infrastructure.Configurations;
+using Usuarios.Infrastructure.Interfaces;
 using Usuarios.Infrastructure.Persistences.Repositories.MongoDB;
 
 namespace Usuarios.Tests.Usuarios.Infrastructure.Persistences.Repositories.MongoDB
@@ -18,6 +19,7 @@ namespace Usuarios.Tests.Usuarios.Infrastructure.Persistences.Repositories.Mongo
         private readonly Mock<IMongoCollection<BsonDocument>> MockUsuarioCollection;
         private readonly Mock<IUsuarioFactory> MockUsuarioFactory;
         private readonly Mock<ILog> MockLogger;
+        private readonly Mock<IAuditoriaRepository> MockAuditoria;
 
         private readonly UsuarioRepository Repository;
 
@@ -58,6 +60,7 @@ namespace Usuarios.Tests.Usuarios.Infrastructure.Persistences.Repositories.Mongo
             MockUsuarioCollection = new Mock<IMongoCollection<BsonDocument>>();
             MockUsuarioFactory = new Mock<IUsuarioFactory>();
             MockLogger = new Mock<ILog>();
+            MockAuditoria = new Mock<IAuditoriaRepository>();
 
             MockMongoDb.Setup(d => d.GetCollection<BsonDocument>("usuarios", It.IsAny<MongoCollectionSettings>()))
                 .Returns(MockUsuarioCollection.Object);
@@ -65,7 +68,7 @@ namespace Usuarios.Tests.Usuarios.Infrastructure.Persistences.Repositories.Mongo
             var MongoConfigInstance = new MongoDBConfig();
             MongoConfigInstance.db = MockMongoDb.Object;
 
-            Repository = new UsuarioRepository(MongoConfigInstance, MockUsuarioFactory.Object, MockLogger.Object);
+            Repository = new UsuarioRepository(MongoConfigInstance, MockUsuarioFactory.Object, MockLogger.Object, MockAuditoria.Object);
 
             // --- DATOS ---
             ExpectedUser1 = new Mock<Usuario>(
