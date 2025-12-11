@@ -17,7 +17,8 @@ namespace Usuarios.Application.Validations
 
             RuleFor(x => x.FechaNacimiento)
                 .NotEmpty().WithMessage("La fecha de nacimiento es obligatoria.")
-                .LessThan(DateOnly.FromDateTime(DateTime.Now)).WithMessage("La fecha de nacimiento debe ser una fecha pasada.");
+                .LessThan(DateOnly.FromDateTime(DateTime.Now)).WithMessage("La fecha de nacimiento debe ser una fecha pasada.")
+                .GreaterThan(DateOnly.FromDateTime(DateTime.Now.AddYears(-150))).WithMessage("La fecha de nacimiento no puede ser tan antigua.");
 
             RuleFor(x => x.Correo)
                 .NotEmpty().WithMessage("El email es obligatorio.")

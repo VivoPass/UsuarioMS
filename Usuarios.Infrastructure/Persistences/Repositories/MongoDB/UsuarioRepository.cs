@@ -56,6 +56,7 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
                     {"direccion", usuario.Direccion.Valor},
                     {"fotoPerfil", usuario.FotoPerfil.Valor ?? ""},
                     { "rol", usuario.Rol.Valor },
+                    { "preferencias", BsonArray.Create(usuario.Preferencias.Preferencias) },
                     { "createdAt", DateTime.UtcNow },
                     { "updatedAt", DateTime.UtcNow }
                 };
@@ -106,9 +107,11 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
                 var direccion = new VODireccion(bsonUsuario["direccion"].AsString);
                 var fotoPerfil = new VOFotoPerfil(bsonUsuario["fotoPerfil"].AsString);
                 var rol = new VORolKeycloakId(bsonUsuario["rol"].AsString);
+                var preferencias = new VOPreferencias(bsonUsuario.GetValue("preferencias", new BsonArray()).AsBsonArray.Select(b => b.AsString).ToList());
+
 
                 var usuario = UsuarioFactory.Load(
-                    idUsuario, nombre, apellido, fechaNacimiento, correoUsuario, telefono, direccion, rol, fotoPerfil
+                    idUsuario, nombre, apellido, fechaNacimiento, correoUsuario, telefono, direccion, rol, fotoPerfil, preferencias
                 );
 
                 Logger.Debug($"Usuario con correo {correo} encontrado y reconstruido.");
@@ -155,9 +158,11 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
                 var direccion = new VODireccion(bsonUsuario["direccion"].AsString);
                 var fotoPerfil = new VOFotoPerfil(bsonUsuario["fotoPerfil"].AsString);
                 var rol = new VORolKeycloakId(bsonUsuario["rol"].AsString);
+                var preferencias = new VOPreferencias(bsonUsuario.GetValue("preferencias", new BsonArray()).AsBsonArray.Select(b => b.AsString).ToList());
+
 
                 var usuario = UsuarioFactory.Load(
-                    idUsuario, nombre, apellido, fechaNacimiento, correo, telefono, direccion, rol, fotoPerfil
+                    idUsuario, nombre, apellido, fechaNacimiento, correo, telefono, direccion, rol, fotoPerfil, preferencias
                 );
 
                 Logger.Debug($"Usuario ID {id} encontrado y reconstruido.");
@@ -246,9 +251,11 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
                     var direccion = new VODireccion(bsonUsuario["direccion"].AsString);
                     var fotoPerfil = new VOFotoPerfil(bsonUsuario["fotoPerfil"].AsString);
                     var rol = new VORolKeycloakId(bsonUsuario["rol"].AsString);
+                    var preferencias = new VOPreferencias(bsonUsuario.GetValue("preferencias", new BsonArray()).AsBsonArray.Select(b => b.AsString).ToList());
+
 
                     return UsuarioFactory.Load(
-                        idUsuario, nombre, apellido, fechaNacimiento, correo, telefono, direccion, rol, fotoPerfil
+                        idUsuario, nombre, apellido, fechaNacimiento, correo, telefono, direccion, rol, fotoPerfil, preferencias
                     );
                 }).ToList();
 
@@ -263,5 +270,36 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
         }
         #endregion
 
-    } 
+        #region ActualizarPreferencias(Usuario usuario)
+        public async Task ActualizarPreferencias(Usuario usuario)
+        {
+            Logger.Info($"Actualizando preferencias del usuario {usuario.Id.Valor} en MongoDB.");
+            try
+            {
+                var filter = Builders<BsonDocument>.Filter.Eq("_id", usuario.Id.Valor);
+
+                var update = Builders<BsonDocument>.Update
+                    .Set("preferencias", BsonArray.Create(usuario.Preferencias.Preferencias))
+                    .Set("updatedAt", DateTime.UtcNow);
+
+                var result = await UsuarioCollection.UpdateOneAsync(filter, update);
+
+                if (result.ModifiedCount == 0)
+                {
+                    Logger.Warn($"No se modificaron las preferencias para el usuario {usuario.Id.Valor}.");
+                    return;
+                }
+
+                await AuditoriaRepository.InsertarAuditoriaUsuario(usuario.Id.Valor, "INFO", "USUARIO_PREFERENCIAS_MODIFICADO",
+                    $"Se modificaron las preferencias del usuario con id '{usuario.Id.Valor}' y correo '{usuario.Correo.Valor}'.");
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Error al actualizar preferencias para usuario {usuario.Id.Valor} en MongoDB.", ex);
+                throw new UsuarioRepositoryException(ex);
+            }
+        }
+        #endregion
+
+    }
 }

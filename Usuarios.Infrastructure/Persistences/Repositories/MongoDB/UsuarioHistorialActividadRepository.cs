@@ -38,7 +38,7 @@ namespace Usuarios.Infrastructure.Persistences.Repositories.MongoDB
         /// <returns>Tarea completada.</returns>
         public async Task AgregarHistAct(BsonDocument actUsuario)
         {
-            string userId = actUsuario.Contains("idUsuario") ? actUsuario["idUsuario"].AsString : "Desconocido";
+            string userId = actUsuario.Contains("_idUsuario") ? actUsuario["_idUsuario"].AsString : "Desconocido";
             string accion = actUsuario.Contains("accion") ? actUsuario["accion"].AsString : "Desconocida";
 
             Logger.Info($"Iniciando registro de actividad para Usuario: {userId}. Acción: {accion}.");
