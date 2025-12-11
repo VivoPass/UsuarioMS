@@ -46,6 +46,12 @@
                   "Rol": {
                     "type": "string"
                   },
+                  "Preferencias": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
                   "imagen": {
                     "type": "string",
                     "description": "Archivo de imagen de perfil enviado en el formulario.",
@@ -79,6 +85,9 @@
                   "style": "form"
                 },
                 "Rol": {
+                  "style": "form"
+                },
+                "Preferencias": {
                   "style": "form"
                 },
                 "imagen": {
@@ -431,6 +440,87 @@
         }
       }
     },
+    "/api/Usuarios/modificarPreferencias": {
+      "put": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Modifica la lista completa de preferencias de un usuario, sobrescribiendo las existentes.",
+        "parameters": [
+          {
+            "name": "idUsuario",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModificarPreferenciasDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModificarPreferenciasDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModificarPreferenciasDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Usuarios/getRolByNombre": {
       "get": {
         "tags": [
@@ -774,6 +864,19 @@
           },
           "accion": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ModificarPreferenciasDTO": {
+        "type": "object",
+        "properties": {
+          "preferencias": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
           }
         },

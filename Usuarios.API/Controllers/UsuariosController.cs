@@ -115,20 +115,6 @@ namespace Usuarios.API.Controllers
                     return NotFound("El usuario no pudo ser actualizado.");
                 }
 
-                //Publicacion en el historial de actividad
-                var createUserActivityDto = new CrearActUsuarioDTO
-                {
-                    IdUsuario = id,
-                    Accion = "Datos del perfil modificados."
-                };
-                _logger.Debug($"Publicando evento de actividad para Usuario: {createUserActivityDto.IdUsuario}. Acción: {createUserActivityDto.Accion}.");
-                await PublishEndpoint.Publish(new HistorialActividadEvent(
-                    createUserActivityDto.IdUsuario,
-                    createUserActivityDto.Accion,
-                    DateTime.UtcNow
-                ));
-                _logger.Info("Evento de actividad publicado correctamente.");
-
                 _logger.Info($"Usuario ID: {id} actualizado exitosamente.");
                 return Ok("Usuario actualizado exitosamente.");
             }
@@ -235,6 +221,37 @@ namespace Usuarios.API.Controllers
             {
                 _logger.Error($"Error al obtener todos los usuarios. Mensaje: {ex.Message}", ex);
                 return StatusCode(500, ex.Message);
+            }
+        }
+        #endregion
+
+        #region ModificarPreferencias([FromQuery] string idUsuario, [FromBody] ModificarPreferenciasDTO listaPreferencias)
+        /// <summary>
+        /// Modifica la lista completa de preferencias de un usuario, sobrescribiendo las existentes.
+        /// </summary>
+        /// <param name="userId">El ID único del usuario a modificar.</param>
+        /// <param name="requestBody">Contiene la nueva lista de preferencias.</param>
+        /// <returns>Respuesta 200 OK si la modificación fue exitosa.</returns>
+        [HttpPut("modificarPreferencias")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ModificarPreferencias([FromQuery] string idUsuario, [FromBody] ModificarPreferenciasDTO listaPreferencias)
+        {
+            try
+            {
+                bool preferenciasNuevas = await Mediator.Send(new ModificarPreferenciasUsuarioCommand(usuarioId: idUsuario, preferencias: listaPreferencias.Preferencias));
+
+                if (!preferenciasNuevas)
+                {
+                    return NotFound("No se pudieron actualizar las preferencias del usuario.");
+                }
+                return Ok(new { Mensaje = "Preferencias actualizadas correctamente." });
+                
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Mensaje = "Ocurrió un error inesperado al procesar la solicitud." });
             }
         }
         #endregion

@@ -16,6 +16,9 @@ namespace Usuarios.Domain.ValueObjects
             if (string.IsNullOrWhiteSpace(valor))
                 throw new IDRolNullException();
 
+            /*if (valor != "administrador" || valor != "usuario_final" || valor != "soporte_tecnico" || valor != "organizador")
+                throw new RolKeycloakInvalido();*/
+
             Valor = valor;
         }
 

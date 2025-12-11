@@ -6,26 +6,6 @@ using System.Threading.Tasks;
 
 namespace Usuarios.Domain.Exceptions
 {
-    /*/////////////////PRESENTACION/////////////////*/
-    /*public class ControllerException : Exception
-    {
-        public int StatusCode { get; }
-
-        public ControllerException(string message, int statusCode = 500)
-            : base(message)
-        {
-            StatusCode = statusCode;
-        }
-    }
-
-    public class UsuarioNoEncontradoException : ControllerException
-    {
-        public UsuarioNoEncontradoException(string id)
-            // Se define el StatusCode (404 Not Found) y el mensaje de error
-            : base($"El usuario con ID '{id}' no fue encontrado.", 404)
-        {
-        }
-    }*/
 
     /*/////////////////APLICACION/////////////////*/
     #region COMMANDS EXCEPTIONS
@@ -40,6 +20,13 @@ namespace Usuarios.Domain.Exceptions
     public class ModificarUsuarioCommandHandlerException : Exception
     {
         public ModificarUsuarioCommandHandlerException(Exception inner) : base("No fue posible modificar el usuario al dominio. " +
+            "El comando no cumplió con las reglas de negocio definidas.", inner)
+        { }
+    }
+    //ModificarPreferenciasUsuarioCommandHandler
+    public class ModificarPreferenciasUsuarioCommandHandlerException : Exception
+    {
+        public ModificarPreferenciasUsuarioCommandHandlerException(Exception inner) : base("No fue posible modificar las preferencias del usuario al dominio. " +
             "El comando no cumplió con las reglas de negocio definidas.", inner)
         { }
     }
@@ -74,6 +61,10 @@ namespace Usuarios.Domain.Exceptions
     {
         public FechaNacimientoUsuarioException() : base("La fecha de nacimiento no puede ser futura.") { }
     }
+    public class FechaNacimientoUsuarioMenorException : Exception
+    {
+        public FechaNacimientoUsuarioMenorException() : base("El usuario debe ser mayor de edad.") { }
+    }
     public class IDUsuarioNullException : Exception
     {
         public IDUsuarioNullException() : base("El ID de usuario no puede estar vacío.") { }
@@ -89,6 +80,10 @@ namespace Usuarios.Domain.Exceptions
     public class IDRolNullException : Exception
     {
         public IDRolNullException() : base("El ID de rol no puede estar vacío.") { }
+    }
+    public class RolKeycloakInvalido : Exception
+    {
+        public RolKeycloakInvalido() : base("El rol ingresado es inválido.") { }
     }
     public class IDRolException : Exception
     {

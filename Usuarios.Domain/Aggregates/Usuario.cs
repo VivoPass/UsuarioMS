@@ -13,9 +13,10 @@ namespace Usuarios.Domain.Aggregates
         public VODireccion Direccion { get; private set; }
         public VOFotoPerfil? FotoPerfil { get; private set; }
         public VORolKeycloakId Rol { get; private set; }
+        public VOPreferencias? Preferencias { get; private set; }
 
         public Usuario(VOId id, VONombre nombre, VOApellido apellido, VOFechaNacimiento fechaNacimiento, VOCorreo correo, VOTelefono telefono,
-            VODireccion direccion, VORolKeycloakId rol, VOFotoPerfil? fotoPerfil = null)
+            VODireccion direccion, VORolKeycloakId rol, VOFotoPerfil? fotoPerfil = null, VOPreferencias? preferencias = null)
         {
             Id = id;
             Nombre = nombre;
@@ -26,6 +27,7 @@ namespace Usuarios.Domain.Aggregates
             Direccion = direccion;
             FotoPerfil = fotoPerfil;
             Rol = rol;
+            Preferencias = preferencias;
         }
 
         public void Modificar(string? nombre, string? apellido, string? telefono, string? direccion, string? fotoPerfil)
@@ -54,6 +56,11 @@ namespace Usuarios.Domain.Aggregates
             {
                 this.FotoPerfil = new VOFotoPerfil(fotoPerfil);
             }
+        }
+
+        public void SetPreferencias(List<string> nuevasPreferencias)
+        {
+            Preferencias = new VOPreferencias(nuevasPreferencias);
         }
     }
 }

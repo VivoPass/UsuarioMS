@@ -53,5 +53,10 @@ namespace Usuarios.Application.DTOs
         /// Rol inicial que se asignará al usuario (ej. "Cliente", "Editor").
         /// </summary>
         public string Rol { get; set; }
+
+        /// <summary>
+        /// Preferencias del usuario por categorias de evento (ej. "Conciertos", "Deportes").
+        /// </summary>
+        public List<string>? Preferencias { get; set; } = new List<string>();
     }
 }

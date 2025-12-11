@@ -5,8 +5,9 @@ namespace Usuarios.Domain.Interfaces
 {
     public interface IUsuarioFactory
     {
-        Usuario Crear (string id, string nombre, string apellido, DateOnly fechaNacimiento, string correo, string telefono, string direccion, string rol, string fotoPerfil);
+        Usuario Crear (string id, string nombre, string apellido, DateOnly fechaNacimiento, string correo, string telefono, string direccion, string rol, 
+            string fotoPerfil, List<string> preferencias);
         Usuario Load(VOId id, VONombre nombre, VOApellido apellido, VOFechaNacimiento fechaNacimiento, VOCorreo correo, VOTelefono telefono,
-            VODireccion direccion, VORolKeycloakId rol, VOFotoPerfil fotoPerfil);
+            VODireccion direccion, VORolKeycloakId rol, VOFotoPerfil fotoPerfil, VOPreferencias preferencias);
     }
 }
