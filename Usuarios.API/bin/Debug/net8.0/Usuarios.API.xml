@@ -51,6 +51,14 @@
             </summary>
             <returns>Retorna una lista de <see cref="T:Usuarios.Application.DTOs.UsuarioDTO"/> (HTTP 200 OK) o 404 Not Found si la lista está vacía.</returns>
         </member>
+        <member name="M:Usuarios.API.Controllers.UsuariosController.ModificarPreferencias(System.String,Usuarios.Application.DTOs.ModificarPreferenciasDTO)">
+            <summary>
+            Modifica la lista completa de preferencias de un usuario, sobrescribiendo las existentes.
+            </summary>
+            <param name="userId">El ID único del usuario a modificar.</param>
+            <param name="requestBody">Contiene la nueva lista de preferencias.</param>
+            <returns>Respuesta 200 OK si la modificación fue exitosa.</returns>
+        </member>
         <member name="M:Usuarios.API.Controllers.UsuariosController.GetRolByNombre(System.String)">
             <summary>
             Obtiene los detalles de un rol a partir de su nombre.

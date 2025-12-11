@@ -16,6 +16,9 @@ namespace Usuarios.Domain.ValueObjects
             if (valor > DateOnly.FromDateTime(DateTime.Today))
                 throw new FechaNacimientoUsuarioException();
 
+            if (valor > DateOnly.FromDateTime(DateTime.Today).AddYears(-18))
+                throw new FechaNacimientoUsuarioMenorException();
+
             Valor = valor;
         }
     }

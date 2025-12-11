@@ -10,6 +10,7 @@ namespace Usuarios.Domain.Interfaces
         Task<Usuario?> GetByCorreo(string correo);
         Task<Usuario?> GetById(string id);
         Task<List<Usuario>> GetTodos();
+        Task ActualizarPreferencias(Usuario usuario);
 
     }
 }

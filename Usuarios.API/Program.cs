@@ -63,6 +63,7 @@ builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
 // REGISTRA MediatR PARA TODOS LOS HANDLERS
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CrearUsuarioCommandHandler).Assembly));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ModificarUsuarioCommandHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ModificarPreferenciasUsuarioCommandHandler).Assembly));
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetUsuarioByCorreoQueryHandler).Assembly));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetUsuarioByIdQueryHandler).Assembly));

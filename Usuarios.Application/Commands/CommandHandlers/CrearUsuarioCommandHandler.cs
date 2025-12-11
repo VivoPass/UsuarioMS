@@ -51,7 +51,8 @@ namespace Usuarios.Application.Commands.CommandHandlers
                     request.UsuarioDto.Telefono,
                     request.UsuarioDto.Direccion,
                     request.UsuarioDto.FotoPerfil,
-                    request.UsuarioDto.Rol
+                    request.UsuarioDto.Rol,
+                    request.UsuarioDto.Preferencias
                 );
                 Logger.Debug($"Entidad de Usuario creada en memoria con ID generado: {usuario.Id.Valor}.");
 
@@ -60,14 +61,12 @@ namespace Usuarios.Application.Commands.CommandHandlers
                 Logger.Info($"Usuario {usuario.Id.Valor} creado y persistido exitosamente en la base de datos.");
                 return usuario.Id.Valor;
             }
-            catch (IDRolNotFoundException)
-            {
-                throw;
-            }
-            catch (CorreoUsuarioExistsException)
-            {
-                throw;
-            }
+            catch (IDRolNotFoundException){ throw; }
+            catch (CorreoUsuarioExistsException) { throw; }
+
+            catch (FechaNacimientoUsuarioMenorException) { throw; }
+            //catch (RolKeycloakInvalido) { throw; }
+
             catch (Exception ex)
             {
                 Logger.Error($"Fallo crítico al ejecutar CrearUsuarioCommand para correo {request.UsuarioDto.Correo}.", ex);
